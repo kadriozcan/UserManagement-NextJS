@@ -21,11 +21,9 @@ export default function RootLayout({
     <html lang="en">
       <body>
         <NavBar />
-        <SSRProvider>
-          <main>
-            <Container className="py-4">{children}</Container>
-          </main>
-        </SSRProvider>
+        <main>
+          <Container className="py-4">{children}</Container>
+        </main>
       </body>
     </html>
   );
