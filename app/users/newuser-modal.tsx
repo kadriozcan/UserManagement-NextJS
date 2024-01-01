@@ -23,7 +23,6 @@ const NewUserModal = ({
       first_name: firstName,
       last_name: lastName,
       phone_number: phoneNumber,
-      // Add other fields as necessary
     };
 
     // Call the onSave function with the new user
