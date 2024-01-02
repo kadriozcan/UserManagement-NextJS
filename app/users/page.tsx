@@ -1,7 +1,6 @@
 "use client";
 import { User } from "@/models/user";
 import React, { useEffect, useState } from "react";
-import UserList from "./user-list";
 import NewUserModal from "./newuser-modal";
 import EditUserModal from "./edituser-modal";
 
@@ -11,19 +10,6 @@ const Page = () => {
   const [selectedUser, setSelectedUser] = useState<User>();
   const [users, setUsers] = useState<User[]>([]);
 
-  const fetchUsers = async () => {
-    try {
-      const response = await fetch("http://localhost:8008/users", {
-        method: "GET",
-      });
-      const users: User[] = await response.json();
-      setUsers(users);
-      console.log("Users:", users);
-    } catch (error) {
-      console.error("Error fetching users:", error);
-    }
-  };
-
   useEffect(() => {
     fetchUsers();
   }, []);
@@ -31,33 +17,61 @@ const Page = () => {
   const handleAddUser = () => {
     setShowAddUserModal(true);
   };
+  const handleEditUser = (user: User) => {
+    setSelectedUser(user);
+    setShowEditUserModal(true);
+  };
   const handleCloseModal = () => {
     setShowAddUserModal(false);
     setShowEditUserModal(false);
   };
 
+  const fetchUsers = async () => {
+    try {
+      const response = await fetch("http://localhost:8008/users", {
+        method: "GET",
+      });
+      if (response.ok) {
+        let users: User[] = await response.json();
+
+        // Format registrationDate field
+        users = users.map((user) => {
+          if (user.registration_date) {
+            const date = new Date(user.registration_date);
+
+            user.registration_date = `${date.toLocaleDateString()} ${date.toLocaleTimeString()}`;
+          }
+          return user;
+        });
+
+        setUsers(users);
+        console.log("Users:", users);
+      }
+    } catch (error) {
+      console.error("Error fetching users:", error);
+    }
+  };
+
   const handleSaveUser = async (newUser: User) => {
     try {
-      const response = await fetch("http://localhost:8008/users/", {
+      const response = await fetch("http://localhost:8008/users", {
         method: "POST",
-        mode: "no-cors",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(newUser),
       });
 
-      console.log("User saved:", newUser.username);
-      fetchUsers();
-      handleCloseModal();
+      if (response.ok) {
+        console.log("User saved:", newUser.username);
+        fetchUsers();
+        handleCloseModal();
+      } else {
+        console.error("Failed to save user. Status:", response.status);
+      }
     } catch (error) {
       console.error("Error:", error);
     }
-  };
-
-  const handleEditUser = (user: User) => {
-    setSelectedUser(user);
-    setShowEditUserModal(true);
   };
 
   const handleUpdateUser = async (updatedUser: User) => {
@@ -72,9 +86,12 @@ const Page = () => {
           body: JSON.stringify(updatedUser),
         }
       );
+
       if (response.ok) {
         console.log(`User with ID ${updatedUser.id} updated.`);
         await fetchUsers();
+      } else {
+        console.error("Failed to update user. Status:", response.status);
       }
     } catch (error) {
       console.error("Error updating user:", error);
@@ -107,6 +124,7 @@ const Page = () => {
         <thead>
           <tr>
             <th scope="col">#</th>
+            <th scope="col">Username</th>
             <th scope="col">First Name</th>
             <th scope="col">Last Name</th>
             <th scope="col">Phone Number</th>
@@ -118,6 +136,7 @@ const Page = () => {
           {users.map((user: User) => (
             <tr key={user.id}>
               <th scope="row">{user.id}</th>
+              <td>{user.username}</td>
               <td>{user.first_name}</td>
               <td>{user.last_name}</td>
               <td>{user.phone_number}</td>

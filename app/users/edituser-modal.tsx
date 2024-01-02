@@ -19,6 +19,7 @@ const EditUserModal = ({
   const [phoneNumber, setPhoneNumber] = useState(selectedUser.phone_number);
 
   useEffect(() => {
+    setUserName(selectedUser.username);
     setFirstName(selectedUser.first_name);
     setLastName(selectedUser.last_name);
     setPhoneNumber(selectedUser.phone_number);
