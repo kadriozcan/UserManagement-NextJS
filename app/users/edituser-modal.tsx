@@ -28,6 +28,10 @@ const EditUserModal = ({
   }, [selectedUser]);
 
   const handleSave = () => {
+    if (!username || !firstName || !lastName || !phoneNumber) {
+      alert("All boxes must be filled.");
+      return;
+    }
     const updatedUser = {
       id: selectedUser.id,
       username: username,

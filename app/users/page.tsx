@@ -109,16 +109,18 @@ const Page = () => {
 
   // delete request with selected user's id
   const handleDeleteUser = async (id: number) => {
-    try {
-      const response = await fetch(`http://localhost:8008/users/${id}`, {
-        method: "DELETE",
-      });
-      if (response.ok) {
-        console.log(`User with ID ${id} deleted.`);
-        await fetchUsers();
+    if (window.confirm("Are you sure you want to delete this user?")) {
+      try {
+        const response = await fetch(`http://localhost:8008/users/${id}`, {
+          method: "DELETE",
+        });
+        if (response.ok) {
+          console.log(`User with ID ${id} deleted.`);
+          await fetchUsers();
+        }
+      } catch (error) {
+        console.error("Error deleting user:", error);
       }
-    } catch (error) {
-      console.error("Error deleting user:", error);
     }
   };
 

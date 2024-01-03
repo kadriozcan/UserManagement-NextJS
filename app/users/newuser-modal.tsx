@@ -18,6 +18,12 @@ const NewUserModal = ({
   const [phoneNumber, setPhoneNumber] = useState("");
 
   const handleSave = () => {
+    // Check if any field is empty
+    if (!username || !firstName || !lastName || !phoneNumber) {
+      alert("All boxes must be filled.");
+      return;
+    }
+
     // Create a new user object
     const newUser = {
       username: username,
