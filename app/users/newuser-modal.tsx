@@ -74,7 +74,7 @@ const NewUserModal = ({
           Close
         </Button>
         <Button variant="primary" onClick={handleSave}>
-          Save User
+          Create
         </Button>
       </Modal.Footer>
     </Modal>
