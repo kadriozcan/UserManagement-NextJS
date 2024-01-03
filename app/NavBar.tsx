@@ -24,7 +24,7 @@ const NavBar = () => {
         <Navbar.Collapse id="main-navbar">
           <Nav>
             <Nav.Link as={Link} href="/users" active={pathname === "/users"}>
-              User Ops
+              User Operations
             </Nav.Link>
           </Nav>
         </Navbar.Collapse>
