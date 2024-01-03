@@ -11,6 +11,7 @@ const NewUserModal = ({
   onClose: () => void;
   onSave: (newUser: User) => void;
 }) => {
+  // setting user details with pop-up fields
   const [username, setUserName] = useState("");
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");

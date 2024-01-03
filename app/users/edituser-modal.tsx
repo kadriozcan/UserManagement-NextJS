@@ -13,11 +13,13 @@ const EditUserModal = ({
   onSave: (updatedUser: User) => void;
   selectedUser: User;
 }) => {
+  // setting user details with the input from pop-up fields
   const [username, setUserName] = useState("");
   const [firstName, setFirstName] = useState(selectedUser.first_name);
   const [lastName, setLastName] = useState(selectedUser.last_name);
   const [phoneNumber, setPhoneNumber] = useState(selectedUser.phone_number);
 
+  // pop-up form fields comes filled with the details of selected user
   useEffect(() => {
     setUserName(selectedUser.username);
     setFirstName(selectedUser.first_name);

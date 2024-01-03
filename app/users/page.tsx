@@ -14,18 +14,24 @@ const Page = () => {
     fetchUsers();
   }, []);
 
+  // show pop-up form for New button
   const handleAddUser = () => {
     setShowAddUserModal(true);
   };
+
+  // show pop-up form for edit button with selected user details
   const handleEditUser = (user: User) => {
     setSelectedUser(user);
     setShowEditUserModal(true);
   };
+
+  // close pop-up form
   const handleCloseModal = () => {
     setShowAddUserModal(false);
     setShowEditUserModal(false);
   };
 
+  // fetching users and formatting registration_date
   const fetchUsers = async () => {
     try {
       const response = await fetch("http://localhost:8008/users", {
@@ -52,6 +58,7 @@ const Page = () => {
     }
   };
 
+  // post request with new user and then, fetch users again
   const handleSaveUser = async (newUser: User) => {
     try {
       const response = await fetch("http://localhost:8008/users", {
@@ -74,6 +81,7 @@ const Page = () => {
     }
   };
 
+  // update request with selected user and fetch users again
   const handleUpdateUser = async (updatedUser: User) => {
     try {
       const response = await fetch(
@@ -99,6 +107,7 @@ const Page = () => {
     handleCloseModal();
   };
 
+  // delete request with selected user's id
   const handleDeleteUser = async (id: number) => {
     try {
       const response = await fetch(`http://localhost:8008/users/${id}`, {
