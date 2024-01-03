@@ -5,10 +5,10 @@ import NewUserModal from "./newuser-modal";
 import EditUserModal from "./edituser-modal";
 
 const Page = () => {
+  const [users, setUsers] = useState<User[]>([]);
+  const [selectedUser, setSelectedUser] = useState<User>();
   const [showAddUserModal, setShowAddUserModal] = useState(false);
   const [showEditUserModal, setShowEditUserModal] = useState(false);
-  const [selectedUser, setSelectedUser] = useState<User>();
-  const [users, setUsers] = useState<User[]>([]);
 
   useEffect(() => {
     fetchUsers();
@@ -143,13 +143,13 @@ const Page = () => {
               <td>{user.registration_date}</td>
               <td>
                 <button
-                  className="btn btn-secondary"
+                  className="btn btn-secondary mx-2"
                   onClick={() => handleEditUser(user)}
                 >
                   Edit
                 </button>
                 <button
-                  className="btn btn-danger"
+                  className="btn btn-danger mx-2"
                   onClick={() => {
                     if (user.id !== undefined) {
                       handleDeleteUser(user.id);
